@@ -1,0 +1,13 @@
+{
+  "name": "config-loader-manager",
+  "version": "1.0.1",
+  "description": "Config manager",
+  "license": "MIT",
+  "repository": "raulcalvo/config-loader-manager",
+  "main": "index.js",
+  "keywords": [
+    "config",
+    "cfg",
+    "manager"
+  ]
+}
