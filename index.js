@@ -3,24 +3,14 @@ const fs = require('fs');
 const path = require('path');
 const mergeJSON = require('merge-json');
 
-function getParentFolderName(){
-    return path.dirname(__filename).split(path.sep).slice(-1)[0];
-}
-
-function normalizeConfig( config ){
-    var moduleName = getParentFolderName();
-    if (config.hasOwnProperty(moduleName))
-        return config;
-    return { moduleName : config };
-}
-
-module.exports.load = function (config = {}, defaultConfig = {}){
+module.exports.load = function (dirname, config = {}, defaultConfig = {}){
     var resultConfig = {};
-    var moduleName = path.dirname(__filename).split(path.sep).slice(-1)[0];
-    var configFile = "./config/" + moduleName + ".js";
+    var moduleName = dirname.split(path.sep).slice(-1)[0];
+    var configFile = path.join( dirname, "config" + moduleName + ".json");
     if ( fs.existsSync(configFile)){
-        var fileConfig = normalizeConfig(JSON.parse(fs.readFileSync(configFile)));
-        resultConfig = mergeJSON.merge(normalizeConfig(defaultConfig), fileConfig);
-    }
-    return mergeJSON.merge(resultConfig, normalizeConfig(config));
+        var fileConfig = JSON.parse(fs.readFileSync(configFile));
+        resultConfig = mergeJSON.merge(defaultConfig, fileConfig);
+    } else
+        resultConfig = defaultConfig;
+    return mergeJSON.merge(resultConfig, config);
 };

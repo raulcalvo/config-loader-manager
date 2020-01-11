@@ -9,5 +9,10 @@
     "config",
     "cfg",
     "manager"
-  ]
+  ],
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "merge-json": "0.1.0-b.3",
+    "path": "^0.12.7"
+  }
 }
